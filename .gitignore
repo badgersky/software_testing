@@ -4,3 +4,4 @@ epc-simulator.tar
 log.html
 output.xml
 report.html
+__pycache__
