@@ -1,6 +1,7 @@
 *** Settings ***
 Library    Collections
 Library    ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
+Test Setup    Reset Simulator
 
 *** Variables ***
 ${BASE_URL}    http://192.168.0.146:8000/ues

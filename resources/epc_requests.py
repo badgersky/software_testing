@@ -24,3 +24,7 @@ class epc_requests:
         if resp.status_code == 200:
             return True
         return False
+
+    def reset_simulator(self):
+        resp = requests.post(self.base_url.replace('/ues', '/reset'))
+        return resp.status_code == 200
