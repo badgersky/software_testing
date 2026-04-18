@@ -1,3 +1,7 @@
 venv
 epc-simulator.tar
 .idea
+log.html
+output.xml
+report.html
+__pycache__

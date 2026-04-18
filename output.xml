@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.4.2 (Python 3.14.2 on win32)" generated="2026-04-18T15:57:30.224207" rpa="false" schemaversion="5">
+<robot generator="Robot 7.4.2 (Python 3.14.2 on win32)" generated="2026-04-18T16:15:29.915246" rpa="false" schemaversion="5">
 <suite id="s1" name="01 Attach" source="D:\Projekty\NOKIA\software_testing\tests\01_attach.robot">
-<test id="s1-t1" name="TC01 Attach UE successfully" line="9">
+<test id="s1-t1" name="TC01 Attach UE successfully" line="10">
+<kw name="Reset Simulator" owner="epc_requests" type="SETUP">
+<status status="PASS" start="2026-04-18T16:15:29.998947" elapsed="0.041171"/>
+</kw>
 <kw name="Attach UE-1" source_name="Attach UE-${ue_id}">
 <kw name="Attach Ue" owner="epc_requests">
-<msg time="2026-04-18T15:57:30.345833" level="INFO">${response} = False</msg>
+<msg time="2026-04-18T16:15:30.059891" level="INFO">${response} = True</msg>
 <var>${response}</var>
 <arg>${ue_id}</arg>
-<status status="PASS" start="2026-04-18T15:57:30.308913" elapsed="0.036956"/>
+<status status="PASS" start="2026-04-18T16:15:30.040758" elapsed="0.019171"/>
 </kw>
 <kw name="Set Test Variable" owner="BuiltIn">
-<msg time="2026-04-18T15:57:30.346505" level="INFO">${LAST_RESPONSE} = False</msg>
+<msg time="2026-04-18T16:15:30.060549" level="INFO">${LAST_RESPONSE} = True</msg>
 <arg>${LAST_RESPONSE}</arg>
 <arg>${response}</arg>
 <doc>Makes a variable available everywhere within the scope of the current test.</doc>
-<status status="PASS" start="2026-04-18T15:57:30.345994" elapsed="0.000541"/>
+<status status="PASS" start="2026-04-18T16:15:30.060052" elapsed="0.000525"/>
 </kw>
-<status status="PASS" start="2026-04-18T15:57:30.308551" elapsed="0.038029"/>
+<status status="PASS" start="2026-04-18T16:15:30.040538" elapsed="0.020105"/>
 </kw>
 <kw name="UE-1 should be attached" source_name="UE-${ue_id} should be attached">
 <kw name="Get Ue" owner="epc_requests">
-<msg time="2026-04-18T15:57:30.361527" level="INFO">${response} = {'ue_id': 1, 'bearers': {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}, 'stats': {}}</msg>
+<msg time="2026-04-18T16:15:30.075590" level="INFO">${response} = {'ue_id': 1, 'bearers': {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}, 'stats': {}}</msg>
 <var>${response}</var>
 <arg>${ue_id}</arg>
-<status status="PASS" start="2026-04-18T15:57:30.346922" elapsed="0.014634"/>
+<status status="PASS" start="2026-04-18T16:15:30.060996" elapsed="0.014623"/>
 </kw>
 <kw name="Set Test Variable" owner="BuiltIn">
-<msg time="2026-04-18T15:57:30.361876" level="INFO">${LAST_RESPONSE} = {'ue_id': 1, 'bearers': {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}, 'stats': {}}</msg>
+<msg time="2026-04-18T16:15:30.075957" level="INFO">${LAST_RESPONSE} = {'ue_id': 1, 'bearers': {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}, 'stats': {}}</msg>
 <arg>${LAST_RESPONSE}</arg>
 <arg>${response}</arg>
 <doc>Makes a variable available everywhere within the scope of the current test.</doc>
-<status status="PASS" start="2026-04-18T15:57:30.361657" elapsed="0.000244"/>
+<status status="PASS" start="2026-04-18T16:15:30.075726" elapsed="0.000256"/>
 </kw>
 <kw name="Should Not Be Equal" owner="BuiltIn">
-<msg time="2026-04-18T15:57:30.362095" level="INFO">Argument types are:
+<msg time="2026-04-18T16:15:30.076185" level="INFO">Argument types are:
 &lt;class 'dict'&gt;
 &lt;class 'NoneType'&gt;</msg>
 <arg>${response}</arg>
 <arg>${None}</arg>
 <doc>Fails if the given objects are equal.</doc>
-<status status="PASS" start="2026-04-18T15:57:30.361960" elapsed="0.000167"/>
+<status status="PASS" start="2026-04-18T16:15:30.076041" elapsed="0.000176"/>
 </kw>
-<status status="PASS" start="2026-04-18T15:57:30.346768" elapsed="0.015395"/>
+<status status="PASS" start="2026-04-18T16:15:30.060842" elapsed="0.015412"/>
 </kw>
 <kw name="UE-1 should have bearer-9" source_name="UE-${ue_id} should have bearer-${bearer_id}">
 <kw name="Set Variable" owner="BuiltIn">
-<msg time="2026-04-18T15:57:30.362720" level="INFO">${bearers} = {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}</msg>
+<msg time="2026-04-18T16:15:30.076778" level="INFO">${bearers} = {'9': {'bearer_id': 9, 'protocol': None, 'target_bps': None, 'active': False}}</msg>
 <var>${bearers}</var>
 <arg>${LAST_RESPONSE}[bearers]</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2026-04-18T15:57:30.362462" elapsed="0.000279"/>
+<status status="PASS" start="2026-04-18T16:15:30.076612" elapsed="0.000181"/>
 </kw>
 <kw name="Dictionary Should Contain Key" owner="Collections">
 <arg>${bearers}</arg>
 <arg>${bearer_id}</arg>
 <doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2026-04-18T15:57:30.362813" elapsed="0.000099"/>
+<status status="PASS" start="2026-04-18T16:15:30.076866" elapsed="0.000092"/>
 </kw>
-<status status="PASS" start="2026-04-18T15:57:30.362324" elapsed="0.000619"/>
+<status status="PASS" start="2026-04-18T16:15:30.076451" elapsed="0.000536"/>
 </kw>
-<status status="PASS" start="2026-04-18T15:57:30.308103" elapsed="0.054947"/>
+<status status="PASS" start="2026-04-18T16:15:29.998395" elapsed="0.078694"/>
 </test>
-<status status="PASS" start="2026-04-18T15:57:30.225235" elapsed="0.138182"/>
+<test id="s1-t2" name="TC02 Attach UE-1" line="15">
+<status status="FAIL" start="2026-04-18T16:15:30.077299" elapsed="0.000166">Test cannot be empty.</status>
+</test>
+<status status="FAIL" start="2026-04-18T16:15:29.916366" elapsed="0.161370"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="01 Attach" id="s1" pass="1" fail="0" skip="0">01 Attach</stat>
+<stat name="01 Attach" id="s1" pass="1" fail="1" skip="0">01 Attach</stat>
 </suite>
 </statistics>
 <errors>
