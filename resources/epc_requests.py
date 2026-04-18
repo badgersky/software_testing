@@ -1,29 +1,26 @@
 import requests
 
-def get_ues(url):
-    resp = requests.get(url)
-    if resp.status_code == 200:
-        data = resp.json()
-        return data['ues']
-    return
 
-def get_ue_by_id(url, id):
-    resp = requests.get(f'{url}/{id}')
-    if resp.status_code == 200:
-        data = resp.json()
-        return data
-    return
+class epc_requests:
 
-def attach_ue(url, id):
-    payload = {"ue_id": id}
-    resp = requests.post(url, json=payload)
-    if resp.status_code == 200:
-        data = resp.json()
-        return True
-    return False
+    def __init__(self, base_url):
+        self.base_url = base_url
 
-if __name__ == '__main__':
-    url = 'http://10.0.40.5:8000/ues'
-    print(get_ues(url))
-    print(get_ue_by_id(url, 1))
-    # print(attach_ue(url, 4))
+    def get_ues(self):
+        resp = requests.get(self.base_url)
+        if resp.status_code == 200:
+            return resp.json()['ues']
+        return
+
+    def get_ue(self, id):
+        resp = requests.get(f'{self.base_url}/{id}')
+        if resp.status_code == 200:
+            return resp.json()
+        return
+
+    def attach_ue(self, id):
+        payload = {"ue_id": id}
+        resp = requests.post(self.base_url, json=payload)
+        if resp.status_code == 200:
+            return True
+        return False
