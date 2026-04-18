@@ -9,9 +9,9 @@ ${BASE_URL}    http://192.168.0.146:8000/ues
 *** Test Cases ***
 TC01 Attach UE successfully
     Attach UE-1
-    UE-1 should be attached
+    UE-1 should be attached    # zmienić konwencję bardziej jako verify/ coś sprawdzam, a nie zdaniem twierdzącym)
     UE-1 should have bearer-9
-
+# dopisać czy status attach (sprawdzić pełną odpwowiedź)
 *** Keywords ***
 Attach UE-${ue_id}
     ${response}=    Attach UE    ${ue_id}
