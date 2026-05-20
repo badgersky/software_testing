@@ -32,23 +32,64 @@ class epc_requests:
         resp = requests.delete(f'{self.base_url}/{id}', json=payload)
         return resp.json()
     
+    def add_bearer(self, id, b_id):
+        payload = {'bearer_id': b_id}
+        resp = requests.post(f'{self.base_url}/{id}/bearers', json=payload)
+        return resp.json()
+    
+    def delete_bearer(self, id, b_id):
+        payload = {'ue_id': id, 'bearer_id': b_id}
+        resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}', json=payload)
+        return resp.json()
+    
+    def start_traffic(self, id, b_id, prot, Mbps, kbps, bps):
+        payload = {
+            "protocol": prot,
+            "ue_id": id,
+            "bearer_id": b_id
+        }
+        if Mbps:
+            payload['Mbps'] = Mbps
+        elif kbps:
+            payload['kbps'] = kbps
+        elif bps:
+            payload['bps'] = bps
+
+        resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
+        return resp.json()
 
 if __name__ == '__main__':
     req = epc_requests('http://localhost:8000/ues')
-    print('attach_ue:')
+    print('\nattach_ue:')
     print(req.attach_ue(2))
     print(req.attach_ue(3))
     print(req.attach_ue(5))
     print(req.attach_ue(150))
-    print('get_ue:')
+    print('\nget_ue:')
     print(req.get_ue(2))
     print(req.get_ue(3))
     print(req.get_ue(150))
-    print('get_ues:')
+    print('\nget_ues:')
     print(req.get_ues())
-    print('get_ues_stats:')
+    print('\nget_ues_stats:')
     print(req.get_ues_stats())
-    print('detach_ue:')
+    print('\ndetach_ue:')
     print(req.detach_ue(2))
     print(req.detach_ue(14))
+    print('\nadd_bearer:')
+    print(req.add_bearer(3, 2))
+    print(req.add_bearer(3, 3))
+    print(req.add_bearer(3, 1))
+    print(req.add_bearer(14, 2))
+    print('\ndelete_bearer:')
+    print(req.delete_bearer(3, 2))
+    print(req.delete_bearer(14, 1))
+    print(req.delete_bearer(3, 1))
+    print(req.delete_bearer(3, 10))
+    print('\nstart_traffic:')
+    print(req.start_traffic(3, 3, "udp", 10, 0, 0))
+    print(req.start_traffic(3, 10, "udp", 10, 0, 0))
+    print(req.start_traffic(14, 3, "udp", 10, 0, 0))
+    print(req.start_traffic(3, 3, "udp", 0, 0, 0))
+    print(req.start_traffic(3, 3, "lol", 0, 0, 0))
     req.reset_simulator()
