@@ -50,9 +50,9 @@ class epc_requests:
         }
         if Mbps:
             payload['Mbps'] = Mbps
-        elif kbps:
+        if kbps:
             payload['kbps'] = kbps
-        elif bps:
+        if bps:
             payload['bps'] = bps
 
         resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
@@ -80,6 +80,7 @@ if __name__ == '__main__':
     print(req.add_bearer(3, 2))
     print(req.add_bearer(3, 3))
     print(req.add_bearer(3, 1))
+    print(req.add_bearer(3, 4))
     print(req.add_bearer(14, 2))
     print('\ndelete_bearer:')
     print(req.delete_bearer(3, 2))
@@ -92,4 +93,5 @@ if __name__ == '__main__':
     print(req.start_traffic(14, 3, "udp", 10, 0, 0))
     print(req.start_traffic(3, 3, "udp", 0, 0, 0))
     print(req.start_traffic(3, 3, "lol", 0, 0, 0))
+    print(req.start_traffic(3, 4, "tcp", 2, 2, 0))
     req.reset_simulator()
