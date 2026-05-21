@@ -62,6 +62,7 @@ if __name__ == '__main__':
     req = epc_requests('http://localhost:8000/ues')
     print('\nattach_ue:')
     print(req.attach_ue(2))
+    print(req.attach_ue(2))
     print(req.attach_ue(3))
     print(req.attach_ue(5))
     print(req.attach_ue(150))
