@@ -7,15 +7,28 @@ Test Setup      Reset Simulator
 *** Test Cases ***
 TC01 Attach UE successfully
     Attach UE-1
-    verify UE-1 is attached   # zmienić konwencję bardziej jako verify/ coś sprawdzam, a nie zdaniem twierdzącym)
+    verify attach status attached
+    verify UE-1 is attached 
     verify UE-1 has bearer-9
-# dopisać czy status attach (sprawdzić pełną odpwowiedź)
 
 TC02 Attach UE second time 
     Attach UE-2
+    verify attach status attached
     Attach UE-2
     verify attach response is duplicate
     verify UE-2 is attached
+
+TC03 Attach UE max id
+    Attach UE-100
+    verify attach status attached
+    verify UE-100 is attached
+    verify UE-100 has bearer-9
+
+TC04 Attach UE min id
+    Attach UE-0
+    verify attach status attached
+    verify UE-0 is attached
+    verify UE-0 has bearer-9
 
 *** Keywords ***
 Attach UE-${ue_id}
@@ -33,3 +46,7 @@ verify UE-${ue_id} has bearer-${bearer_id}
 
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
+
+verify attach status ${expected_status}
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
