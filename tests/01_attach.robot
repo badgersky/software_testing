@@ -34,6 +34,10 @@ TC05 Attach UE above max id
     Attach UE-101
     Verify attach response should be error
 
+TC06 Attach UE below min id
+    Attach UE--1
+    Verify attach response should be error
+
 *** Keywords ***
 Attach UE-${ue_id}
     ${response}=    Attach UE    ${ue_id}
