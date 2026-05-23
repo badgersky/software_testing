@@ -23,9 +23,13 @@ class epc_requests:
     def reset_simulator(self):
         resp = requests.post(self.base_url.replace('/ues', '/reset'))
         return resp.status_code == 200
-    
-    def get_ues_stats(self):
-        resp = requests.get(f'{self.base_url}/stats')
+
+    def get_ues_stats(self, id=None, include_details=False):
+        params = {'include_details': include_details}
+        if id is not None:
+            params['ue_id'] = id
+
+        resp = requests.get(f'{self.base_url}/stats', params=params)
         return resp.json()
     
     def detach_ue(self, id):
@@ -57,6 +61,10 @@ class epc_requests:
             payload['bps'] = bps
 
         resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
+        return resp.json()
+
+    def get_traffic_stats(self, id, b_id):
+        resp = requests.get(f'{self.base_url}/{id}/bearers/{b_id}/traffic')
         return resp.json()
 
 if __name__ == '__main__':
