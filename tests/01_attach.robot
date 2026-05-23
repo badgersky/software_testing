@@ -2,6 +2,7 @@
 Library         Collections
 Variables       ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i utworzyć w nim zmienna BASE_URL: BASE_URL = 'https://...'
 Library         ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
+Resource        ${CURDIR}/../resources/common_keywords.robot
 Test Setup      Reset Simulator
 
 *** Test Cases ***
@@ -54,10 +55,6 @@ verify UE-${ue_id} has bearer-${bearer_id}
 
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
-
-verify attach status ${expected_status}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
 
 Verify attach response should be error
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}

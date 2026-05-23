@@ -2,6 +2,7 @@
 Library         Collections
 Variables       ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i utworzyć w nim zmienna BASE_URL: BASE_URL = 'https://...'
 Library         ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
+Resource        ${CURDIR}/../resources/common_keywords.robot
 Test Setup      Reset Simulator
 
 *** Test Cases ***
@@ -13,17 +14,9 @@ TC01 Detach attached UE successfully
     UE-1 should not exist
 
 *** Keywords ***
-Attach UE-${ue_id}
-    ${response}=    Attach UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
-
-verify attach status ${expected_status}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
 
 Verify detach status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
@@ -32,8 +25,8 @@ Verify detach status ${expected_status}
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
-    verify response should be error
+    verify detach response should be error
 
-verify response should be error
+verify detach response should be error
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
