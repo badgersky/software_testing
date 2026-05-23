@@ -44,6 +44,20 @@ TC07 Failed attach should not affect UE list
     Verify attach response should be error
     UEs list should be empty
 
+TC08 Multiple UEs attached independently
+    Attach UE-1
+    Verify attach status attached
+    Attach UE-2
+    Verify attach status attached
+    Attach UE-3
+    Verify attach status attached
+    verify UE-1 is attached
+    verify UE-2 is attached
+    verify UE-3 is attached
+    UEs list should contain UE-1
+    UEs list should contain UE-2
+    UEs list should contain UE-3
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
@@ -63,3 +77,9 @@ UEs list should be empty
     ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
     Length Should Be    ${ues}    0
 
+UEs list should contain UE-${ue_id}
+    ${response}=    Get UEs
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+    ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
+    ${ue_id_as_int}=    Convert To Integer    ${ue_id}
+    List Should Contain Value    ${ues}    ${ue_id_as_int}
