@@ -9,3 +9,7 @@ Attach UE-${ue_id}
 Verify ${operation} status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
+
+Verify ${operation} response should be error
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail

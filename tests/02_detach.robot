@@ -13,6 +13,10 @@ TC01 Detach attached UE successfully
     Verify detach status detached
     UE-1 should not exist
 
+TC02 Detach non attached UE should be rejected
+    Detach UE-1
+    Verify detach response should be error
+
 *** Keywords ***
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
@@ -21,8 +25,4 @@ Detach UE-${ue_id}
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
-    verify detach response should be error
-
-verify detach response should be error
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
+    Verify detach response should be error

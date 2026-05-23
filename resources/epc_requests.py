@@ -1,4 +1,5 @@
 import requests
+from config import BASE_URL
 
 
 class epc_requests:
@@ -59,7 +60,7 @@ class epc_requests:
         return resp.json()
 
 if __name__ == '__main__':
-    req = epc_requests('http://localhost:8000/ues')
+    req = epc_requests(BASE_URL)
     print('\nattach_ue:')
     print(req.attach_ue(2))
     print(req.attach_ue(2))

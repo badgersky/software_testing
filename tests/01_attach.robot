@@ -52,6 +52,3 @@ verify UE-${ue_id} has bearer-${bearer_id}
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
 
-Verify attach response should be error
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
