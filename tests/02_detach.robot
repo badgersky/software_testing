@@ -25,6 +25,10 @@ TC03 Detach UE twice should be rejected on second attempt
     Detach UE-1
     Verify detach response should be error
 
+TC04 Detach below range should be error
+    Detach UE--1
+    Verify detach response should be error
+
 *** Keywords ***
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
