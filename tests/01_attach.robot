@@ -30,6 +30,10 @@ TC04 Attach UE min id
     verify UE-0 is attached
     verify UE-0 has bearer-9
 
+TC05 Attach UE above max id
+    Attach UE-101
+    Verify attach response should be error
+
 *** Keywords ***
 Attach UE-${ue_id}
     ${response}=    Attach UE    ${ue_id}
@@ -50,3 +54,7 @@ verify attach response is duplicate
 verify attach status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
+
+Verify attach response should be error
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
