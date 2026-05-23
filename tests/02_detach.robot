@@ -29,6 +29,10 @@ TC04 Detach below range should be error
     Detach UE--1
     Verify detach response should be error
 
+TC05 Detach above range should be error
+    Detach UE-101
+    Verify detach response should be error
+
 *** Keywords ***
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
