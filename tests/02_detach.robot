@@ -17,6 +17,14 @@ TC02 Detach non attached UE should be rejected
     Detach UE-1
     Verify detach response should be error
 
+TC03 Detach UE twice should be rejected on second attempt
+    Attach UE-1
+    Verify attach status attached
+    Detach UE-1
+    Verify detach status detached
+    Detach UE-1
+    Verify detach response should be error
+
 *** Keywords ***
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
