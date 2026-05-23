@@ -39,6 +39,11 @@ TC06 Attach UE below min id
     Attach UE--1
     Verify attach response should be error
 
+TC07 Failed attach should not affect UE list
+    Attach UE-101
+    Verify attach response should be error
+    UEs list should be empty
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
@@ -51,4 +56,10 @@ verify UE-${ue_id} has bearer-${bearer_id}
 
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
+
+UEs list should be empty
+    ${response}=    Get UEs
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+    ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
+    Length Should Be    ${ues}    0
 
