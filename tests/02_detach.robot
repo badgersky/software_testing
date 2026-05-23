@@ -8,7 +8,7 @@ Test Setup      Reset Simulator
 *** Test Cases ***
 TC01 Detach attached UE successfully
     Attach UE-1
-    verify attach status attached
+    Verify attach status attached
     Detach UE-1
     Verify detach status detached
     UE-1 should not exist
@@ -17,10 +17,6 @@ TC01 Detach attached UE successfully
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
-
-Verify detach status ${expected_status}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
 
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}

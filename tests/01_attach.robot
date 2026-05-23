@@ -8,26 +8,26 @@ Test Setup      Reset Simulator
 *** Test Cases ***
 TC01 Attach UE successfully
     Attach UE-1
-    verify attach status attached
+    Verify attach status attached
     verify UE-1 is attached 
     verify UE-1 has bearer-9
 
 TC02 Attach UE second time 
     Attach UE-2
-    verify attach status attached
+    Verify attach status attached
     Attach UE-2
     verify attach response is duplicate
     verify UE-2 is attached
 
 TC03 Attach UE max id
     Attach UE-100
-    verify attach status attached
+    Verify attach status attached
     verify UE-100 is attached
     verify UE-100 has bearer-9
 
 TC04 Attach UE min id
     Attach UE-0
-    verify attach status attached
+    Verify attach status attached
     verify UE-0 is attached
     verify UE-0 has bearer-9
 
@@ -40,10 +40,6 @@ TC06 Attach UE below min id
     Verify attach response should be error
 
 *** Keywords ***
-Attach UE-${ue_id}
-    ${response}=    Attach UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
