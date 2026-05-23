@@ -58,6 +58,11 @@ TC08 Multiple UEs attached independently
     UEs list should contain UE-2
     UEs list should contain UE-3
 
+TC09 Newly attached UE has exactly one bearer
+    Attach UE-5
+    Verify attach status attached
+    UE-5 should have exactly one bearer
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
@@ -83,3 +88,10 @@ UEs list should contain UE-${ue_id}
     ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
     ${ue_id_as_int}=    Convert To Integer    ${ue_id}
     List Should Contain Value    ${ues}    ${ue_id_as_int}
+
+UE-${ue_id} should have exactly one bearer
+    ${response}=    Get UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
+    ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
+    Length Should Be    ${bearers}    1
