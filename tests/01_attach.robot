@@ -26,10 +26,10 @@ TC03 Attach UE max id
     verify UE-100 has bearer-9
 
 TC04 Attach UE min id
-    Attach UE-0
-    Verify attach status attached
-    verify UE-0 is attached
-    verify UE-0 has bearer-9
+    Attach UE-1
+    verify attach status attached
+    verify UE-1 is attached
+    verify UE-1 has bearer-9
 
 TC05 Attach UE above max id
     Attach UE-101
@@ -63,6 +63,10 @@ TC09 Newly attached UE has exactly one bearer
     Verify attach status attached
     UE-5 should have exactly one bearer
 
+TC10 Attach UE below of range
+    Attach UE-0
+    verify attach response is below of range
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
@@ -95,3 +99,19 @@ UE-${ue_id} should have exactly one bearer
     Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
     ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
     Length Should Be    ${bearers}    1
+
+verify attach status ${expected_status}
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
+
+verify attach response is above of range
+    ${detail_list}=    Get From Dictionary    ${LAST_RESPONSE}    detail
+    ${error_obj}=    Get From List    ${detail_list}    0
+    Dictionary Should Contain Item    ${error_obj}    type    less_than_equal
+    Dictionary Should Contain Item    ${error_obj}    msg     Input should be less than or equal to 100
+
+verify attach response is below of range
+    ${detail_list}=    Get From Dictionary    ${LAST_RESPONSE}    detail
+    ${error_obj}=    Get From List    ${detail_list}    0
+    Dictionary Should Contain Item    ${error_obj}    type    greater_than_equal
+    Dictionary Should Contain Item    ${error_obj}    msg     Input should be greater than or equal to 1

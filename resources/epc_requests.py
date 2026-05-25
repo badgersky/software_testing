@@ -62,7 +62,7 @@ class epc_requests:
 if __name__ == '__main__':
     req = epc_requests(BASE_URL)
     print('\nattach_ue:')
-    print(req.attach_ue(2))
+    print(req.attach_ue(0))
     print(req.attach_ue(2))
     print(req.attach_ue(3))
     print(req.attach_ue(5))
