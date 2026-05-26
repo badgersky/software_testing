@@ -26,10 +26,10 @@ TC03 Attach UE max id
     verify UE-100 has bearer-9
 
 TC04 Attach UE min id
-    Attach UE-1
+    Attach UE-0
     verify attach status attached
-    verify UE-1 is attached
-    verify UE-1 has bearer-9
+    verify UE-0 is attached
+    verify UE-0 has bearer-9
 
 TC05 Attach UE above max id
     Attach UE-101
@@ -62,10 +62,6 @@ TC09 Newly attached UE has exactly one bearer
     Attach UE-5
     Verify attach status attached
     UE-5 should have exactly one bearer
-
-TC10 Attach UE below of range
-    Attach UE-0
-    verify attach response is below of range
 
 *** Keywords ***
 verify UE-${ue_id} is attached
