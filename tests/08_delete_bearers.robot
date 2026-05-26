@@ -50,3 +50,12 @@ verify UE-${ue_id} does not have bearer-${bearer_id}
     ${response}=    Get UE    ${ue_id}
     ${bearers}=    Get From Dictionary    ${response}    bearers
     Dictionary Should Not Contain Key    ${bearers}    ${bearer_id}
+
+verify UE-${ue_id} has bearer-${bearer_id}
+    ${response}=    Get UE    ${ue_id}
+    ${bearers}=    Get From Dictionary    ${response}    bearers
+    Dictionary Should Contain Key    ${bearers}    ${bearer_id}
+
+Add bearer-${bearer_id} to UE-${ue_id}
+    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
