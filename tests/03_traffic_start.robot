@@ -44,6 +44,12 @@ TC06 Start TCP traffic with max allowed DL throughput
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-9 should be-100000000
 
+TC07 Start TCP traffic above max DL throughput should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-101 Mbps on UE-1 bearer-9
+    Verify traffic response should be error
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
