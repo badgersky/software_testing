@@ -79,10 +79,6 @@ TC08 Add remove and re-add bearer successfully
     verify UE-1 has bearer-1
 
 *** Keywords ***
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Verify attach status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
