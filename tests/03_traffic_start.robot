@@ -17,6 +17,12 @@ TC02 Start traffic on non existing UE should be rejected
     Start traffic-5000 kbps on UE-999 bearer-9
     Verify traffic response should be error
 
+TC03 Start traffic on non existing bearer should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Start traffic-5000 kbps on UE-1 bearer-10
+    Verify traffic response should be error
+
 *** Keywords ***
 Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${0}    ${traffic_value}    ${0}
