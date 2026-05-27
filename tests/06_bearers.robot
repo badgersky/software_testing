@@ -33,11 +33,52 @@ TC04 Add already existing bearer should be rejected
     Add bearer-1 to UE-1
     Verify operation response should be error
 
-*** Keywords ***
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
+TC05 Add same bearer to two different UEs successfully
+    Attach UE-1
+    Verify attach status attached
+    Attach UE-2
+    Verify attach status attached
 
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
+
+    Add bearer-1 to UE-2
+    Verify operation status bearer_added
+    verify UE-2 has bearer-1
+
+TC06 Add minimum valid bearer ID
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
+
+TC07 Add maximum valid bearer ID
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-2 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-2
+
+TC08 Add remove and re-add bearer successfully
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
+
+    Delete bearer-1 from UE-1
+    Verify operation status bearer_deleted
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
+
+*** Keywords ***
 Verify attach status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
@@ -47,22 +88,18 @@ verify UE-${ue_id} has bearer-${bearer_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
     Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
     ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
-    
-    # Note: If your API saves bearer keys as strings in the JSON dictionary, 
-    # Robot will look for string matching automatically. If it uses ints, uncomment below:
-    # ${bearer_id}=    Convert To Integer    ${bearer_id}
     Dictionary Should Contain Key    ${bearers}    ${bearer_id}
 
 Verify operation response should be error
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    # This keyword dynamically handles your two API error structures:
-    # 1. String message error: {'detail': 'Bearer already exists'} / {'detail': 'UE not found'}
-    # 2. Validation list error: {'detail': [{'type': 'less_than_equal', ...}]}
     ${has_detail}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
     
     IF    ${has_detail}
         Pass Execution    Error response validated successfully via 'detail' field.
     ELSE
-        # Fallback assertion if 'detail' is completely missing
         Fail    Expected an error response payload containing 'detail', but got: ${LAST_RESPONSE}
     END
+
+Delete bearer-${bearer_id} from UE-${ue_id}
+    ${response}=    Delete Bearer    ${ue_id}    ${bearer_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
