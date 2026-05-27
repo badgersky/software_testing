@@ -18,3 +18,10 @@ Add bearer-${bearer_id} to UE-${ue_id}
     ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
 
+Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
+    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+
+Detach UE-${ue_id}
+    ${response}=    Detach UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}

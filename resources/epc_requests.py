@@ -47,7 +47,7 @@ class epc_requests:
         resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}', json=payload)
         return resp.json()
 
-    def start_traffic(self, id, b_id, prot, Mbps, kbps, bps):
+    def start_traffic(self, id, b_id, prot, value, unit):
         payload = {
             "protocol": prot,
             "ue_id": id,

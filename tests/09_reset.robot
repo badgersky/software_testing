@@ -18,7 +18,7 @@ TC02 Reset simulator clears stats
     Attach UE-1
     Verify attach status attached
     Add bearer-1 to UE-1
-    Start traffic-50 Mbps on UE-1 bearer-9
+    Start udp traffic-50 Mbps on UE-1 bearer-9
     Verify operation status traffic_started
     Reset Simulator
     ${stats}=    Get UEs Stats
@@ -34,7 +34,3 @@ UEs list should be empty
     ${response}=    Get UEs
     ${ues}=    Get From Dictionary    ${response}    ues
     Length Should Be    ${ues}    0
-
-Start traffic-${traffic_value} Mbps on UE-${ue_id} bearer-${bearer_id}
-    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${traffic_value}    ${0}    ${0}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}

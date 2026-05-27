@@ -4,17 +4,12 @@ Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i
 Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
 Resource         ${CURDIR}/../resources/common_keywords.robot
 Test Setup       Reset Simulator
-Library          Collections
-Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i utworzyć w nim zmienna BASE_URL: BASE_URL = 'https://...'
-Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
-Resource         ${CURDIR}/../resources/common_keywords.robot
-Test Setup       Reset Simulator
 
 *** Test Cases ***
 TC01 Check current traffic for default bearer
     Attach UE-1
     Verify attach status attached
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
     Check traffic for UE-1 bearer-9
     Verify traffic check response contains UE-1 bearer-9
@@ -25,7 +20,7 @@ TC02 Check current traffic for dedicated bearer
     Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
-    Start traffic-2500 kbps on UE-1 bearer-5
+    Start udp traffic-2500 kbps on UE-1 bearer-5
     Verify traffic status traffic_started
     Check traffic for UE-1 bearer-5
     Verify traffic check response contains UE-1 bearer-5
@@ -36,9 +31,9 @@ TC03 Check summary traffic for UE with multiple active bearers
     Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
-    Start traffic-2500 kbps on UE-1 bearer-5
+    Start udp traffic-2500 kbps on UE-1 bearer-5
     Verify traffic status traffic_started
     Check summary traffic for UE-1
     Verify traffic summary should contain transfer fields
@@ -48,7 +43,7 @@ TC03 Check summary traffic for UE with multiple active bearers
 TC04 Check traffic default unit is kbps
     Attach UE-1
     Verify attach status attached
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
     Check traffic for UE-1 bearer-9
     Verify checked traffic value in default unit should be-5000
@@ -56,7 +51,7 @@ TC04 Check traffic default unit is kbps
 TC05 Check summary traffic without bearer ID
     Attach UE-1
     Verify attach status attached
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
     Check summary traffic for UE-1
     Verify traffic summary should contain transfer fields
@@ -80,10 +75,6 @@ Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
     ${bearer_id_as_int}=    Convert To Integer    ${bearer_id}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    ue_id    ${ue_id_as_int}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    bearer_id    ${bearer_id_as_int}
-
-Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
-    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${0}    ${traffic_value}    ${0}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
 
 Check traffic for UE-${ue_id} bearer-${bearer_id}
     ${response}=    Get Traffic Stats    ${ue_id}    ${bearer_id}
