@@ -51,14 +51,9 @@ class epc_requests:
         payload = {
             "protocol": prot,
             "ue_id": id,
-            "bearer_id": b_id
+            "bearer_id": b_id,
+            unit: value
         }
-        if Mbps:
-            payload['Mbps'] = Mbps
-        if kbps:
-            payload['kbps'] = kbps
-        if bps:
-            payload['bps'] = bps
 
         resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
         return resp.json()

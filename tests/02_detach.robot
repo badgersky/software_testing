@@ -29,12 +29,25 @@ TC04 Detach below range should be error
     Detach UE--1
     Verify detach response should be error
 
-*** Keywords ***
-Detach UE-${ue_id}
-    ${response}=    Detach UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
+TC05 Detach above range should be error
+    Detach UE-101
+    Verify detach response should be error
 
+TC06 Detach UE with active traffic
+    Attach UE-1
+    Verify attach status attached
+    Start traffic-5000 kbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Detach UE-1
+    Verify detach status detached
+    UE-1 should not exist
+
+*** Keywords ***
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
     Verify detach response should be error
+
+Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
+    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${0}    ${traffic_value}    ${0}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
