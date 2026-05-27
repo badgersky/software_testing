@@ -109,6 +109,15 @@ TC16 Start TCP traffic with zero throughput should be error
     Start tcp traffic-0 kbps on UE-1 bearer-9
     Verify traffic response should be error
 
+TC17 Restart TCP traffic on running bearer should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-5000 kbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Start tcp traffic-10000 kbps on UE-1 bearer-9
+    Verify traffic response should be error
+    Traffic target for UE-1 bearer-9 should be-5000000
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
