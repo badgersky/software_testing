@@ -89,7 +89,7 @@ TC13 Start TCP traffic on UE out of range should be rejected
     Start tcp traffic-5000 kbps on UE-999 bearer-9
     Verify traffic response should be error
 
-TC15 Start TCP traffic on detached UE should be rejected
+TC14 Start TCP traffic on detached UE should be rejected
     Attach UE-1
     Verify attach status attached
     Detach UE-1
