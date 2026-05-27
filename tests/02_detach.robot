@@ -51,3 +51,7 @@ UE-${ue_id} should not exist
 Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${0}    ${traffic_value}    ${0}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
+
+Detach UE-${ue_id}
+    ${response}=    Detach UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
