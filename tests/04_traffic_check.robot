@@ -4,7 +4,11 @@ Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i
 Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
 Resource         ${CURDIR}/../resources/common_keywords.robot
 Test Setup       Reset Simulator
-
+Library          Collections
+Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i utworzyć w nim zmienna BASE_URL: BASE_URL = 'https://...'
+Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
+Resource         ${CURDIR}/../resources/common_keywords.robot
+Test Setup       Reset Simulator
 
 *** Test Cases ***
 TC01 Check current traffic for default bearer

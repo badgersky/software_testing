@@ -31,22 +31,22 @@ class epc_requests:
 
         resp = requests.get(f'{self.base_url}/stats', params=params)
         return resp.json()
-    
+
     def detach_ue(self, id):
         payload = {'ue_id': id}
         resp = requests.delete(f'{self.base_url}/{id}', json=payload)
         return resp.json()
-    
+
     def add_bearer(self, id, b_id):
         payload = {'bearer_id': b_id}
         resp = requests.post(f'{self.base_url}/{id}/bearers', json=payload)
         return resp.json()
-    
+
     def delete_bearer(self, id, b_id):
         payload = {'ue_id': id, 'bearer_id': b_id}
         resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}', json=payload)
         return resp.json()
-    
+
     def start_traffic(self, id, b_id, prot, Mbps, kbps, bps):
         payload = {
             "protocol": prot,
@@ -61,6 +61,10 @@ class epc_requests:
             payload['bps'] = bps
 
         resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
+        return resp.json()
+
+    def stop_traffic(self, id, b_id):
+        resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}/traffic')
         return resp.json()
 
     def get_traffic_stats(self, id, b_id):
