@@ -57,6 +57,13 @@ TC08 Start TCP traffic with minimum positive throughput
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-9 should be-1
 
+TC09 Start TCP traffic with fractional throughput
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-0.001 kbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Traffic target for UE-1 bearer-9 should be-1
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
