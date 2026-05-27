@@ -43,10 +43,6 @@ TC06 Detach UE with active traffic
     UE-1 should not exist
 
 *** Keywords ***
-Detach UE-${ue_id}
-    ${response}=    Detach UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}

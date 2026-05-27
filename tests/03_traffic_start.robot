@@ -27,7 +27,7 @@ TC03 Start TCP traffic in bps on active default bearer
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-9 should be-5000000
 
-TC04 Start TCP traffic on non existing UE should be rejected
+TC04 Start TCP traffic on non attached UE should be rejected
     Start tcp traffic-5000 kbps on UE-99 bearer-9
     Verify traffic response should be error
 
@@ -87,6 +87,14 @@ TC12 Start TCP traffic on dedicated bearer
 
 TC13 Start TCP traffic on UE out of range should be rejected
     Start tcp traffic-5000 kbps on UE-999 bearer-9
+    Verify traffic response should be error
+
+TC15 Start TCP traffic on detached UE should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Detach UE-1
+    Verify detach status detached
+    Start tcp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic response should be error
 
 *** Keywords ***

@@ -17,3 +17,7 @@ Verify ${operation} response should be error
 Add bearer-${bearer_id} to UE-${ue_id}
     ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
+
+Detach UE-${ue_id}
+    ${response}=    Detach UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
