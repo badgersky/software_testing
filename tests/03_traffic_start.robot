@@ -19,7 +19,7 @@ TC02 Start tcp traffic on non existing UE should be rejected
 
 TC03 Start tcp traffic on non existing bearer should be rejected
     Attach UE-1
-    Verify tcp attach status attached
+    Verify attach status attached
     Start tcp traffic-5000 kbps on UE-1 bearer-10
     Verify traffic response should be error
 
