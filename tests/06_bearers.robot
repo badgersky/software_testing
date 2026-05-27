@@ -55,6 +55,28 @@ TC06 Add minimum valid bearer ID
     Verify operation status bearer_added
     verify UE-1 has bearer-1
 
+TC07 Add maximum valid bearer ID
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-2 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-2
+
+TC08 Add remove and re-add bearer successfully
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
+
+    Delete bearer-1 from UE-1
+    Verify operation status bearer_deleted
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    verify UE-1 has bearer-1
 
 *** Keywords ***
 Add bearer-${bearer_id} to UE-${ue_id}
@@ -81,3 +103,7 @@ Verify operation response should be error
     ELSE
         Fail    Expected an error response payload containing 'detail', but got: ${LAST_RESPONSE}
     END
+
+Delete bearer-${bearer_id} from UE-${ue_id}
+    ${response}=    Delete Bearer    ${ue_id}    ${bearer_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
