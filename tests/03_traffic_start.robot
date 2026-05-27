@@ -23,7 +23,7 @@ TC02 Start TCP traffic in Mbps on active default bearer
     Traffic target for UE-1 bearer-9 should be-10000000
 
 TC03 Start TCP traffic in bps on active default bearer
-    [Tags]    tcp
+    [Tags]    tcp    bps
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-5000000 bps on UE-1 bearer-9
@@ -43,7 +43,7 @@ TC05 Start TCP traffic on non existing bearer should be rejected
     Verify traffic response should be error
 
 TC06 Start TCP traffic with max allowed DL throughput
-    [Tags]    tcp
+    [Tags]    tcp    boundary
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-100 Mbps on UE-1 bearer-9
@@ -51,14 +51,14 @@ TC06 Start TCP traffic with max allowed DL throughput
     Traffic target for UE-1 bearer-9 should be-100000000
 
 TC07 Start TCP traffic above max DL throughput should be rejected
-    [Tags]    tcp
+    [Tags]    tcp    boundary
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-101 Mbps on UE-1 bearer-9
     Verify traffic response should be error
 
 TC08 Start TCP traffic with minimum positive throughput
-    [Tags]    tcp
+    [Tags]    tcp    boundary
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-1 bps on UE-1 bearer-9
@@ -66,7 +66,7 @@ TC08 Start TCP traffic with minimum positive throughput
     Traffic target for UE-1 bearer-9 should be-1
 
 TC09 Start TCP traffic with fractional throughput
-    [Tags]    tcp
+    [Tags]    tcp    edge_case
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-0.001 kbps on UE-1 bearer-9
@@ -74,14 +74,14 @@ TC09 Start TCP traffic with fractional throughput
     Traffic target for UE-1 bearer-9 should be-1
 
 TC10 Start TCP traffic with negative fractional throughput should be rejected
-    [Tags]    tcp
+    [Tags]    tcp    edge_case
     Attach UE-1
     Verify attach status attached
     Start tcp traffic--0.001 kbps on UE-1 bearer-9
     Verify traffic response should be error
 
 TC11 Start TCP traffic with negative throughput should be rejected
-    [Tags]    tcp
+    [Tags]    tcp    edge_case
     Attach UE-1
     Verify attach status attached
     Start tcp traffic--5000 kbps on UE-1 bearer-9
@@ -119,7 +119,7 @@ TC15 Start TCP traffic on bearer below range should be rejected
     Verify traffic response should be error
 
 TC16 Start TCP traffic with zero throughput should be error
-    [Tags]    tcp
+    [Tags]    tcp    edge_case
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-0 kbps on UE-1 bearer-9
@@ -145,7 +145,7 @@ TC18 Multiple UEs TCP traffic independently
     Traffic target for UE-2 bearer-9 should be-10000000
 
 TC19 Start UDP traffic in kbps on active default bearer
-    [Tags]    udp
+    [Tags]    udp    kbps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-5000 kbps on UE-1 bearer-9
@@ -153,7 +153,7 @@ TC19 Start UDP traffic in kbps on active default bearer
     Traffic target for UE-1 bearer-9 should be-5000000
 
 TC20 Start UDP traffic in Mbps on active default bearer
-    [Tags]    udp
+    [Tags]    udp    mbps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-10 Mbps on UE-1 bearer-9
@@ -161,7 +161,7 @@ TC20 Start UDP traffic in Mbps on active default bearer
     Traffic target for UE-1 bearer-9 should be-10000000
 
 TC21 Start UDP traffic in bps on active default bearer
-    [Tags]    udp
+    [Tags]    udp    bps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-5000000 bps on UE-1 bearer-9
@@ -181,7 +181,7 @@ TC23 Start UDP traffic on non existing bearer should be rejected
     Verify traffic response should be error
 
 TC24 Start UDP traffic with max allowed DL throughput
-    [Tags]    udp
+    [Tags]    udp    boundary    mbps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-100 Mbps on UE-1 bearer-9
@@ -189,14 +189,14 @@ TC24 Start UDP traffic with max allowed DL throughput
     Traffic target for UE-1 bearer-9 should be-100000000
 
 TC25 Start UDP traffic above max DL throughput should be rejected
-    [Tags]    udp
+    [Tags]    udp    boundary    mbps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-101 Mbps on UE-1 bearer-9
     Verify traffic response should be error
 
 TC26 Start UDP traffic with minimum positive throughput
-    [Tags]    udp
+    [Tags]    udp    boundary    bps
     Attach UE-1
     Verify attach status attached
     Start udp traffic-1 bps on UE-1 bearer-9
@@ -204,7 +204,7 @@ TC26 Start UDP traffic with minimum positive throughput
     Traffic target for UE-1 bearer-9 should be-1
 
 TC27 Start UDP traffic with fractional throughput
-    [Tags]    udp
+    [Tags]    udp    edge_case
     Attach UE-1
     Verify attach status attached
     Start udp traffic-0.001 kbps on UE-1 bearer-9
@@ -212,14 +212,14 @@ TC27 Start UDP traffic with fractional throughput
     Traffic target for UE-1 bearer-9 should be-1
 
 TC28 Start UDP traffic with negative fractional throughput should be rejected
-    [Tags]    udp
+    [Tags]    udp    edge_case
     Attach UE-1
     Verify attach status attached
     Start udp traffic--0.001 kbps on UE-1 bearer-9
     Verify traffic response should be error
 
 TC29 Start UDP traffic with negative throughput should be rejected
-    [Tags]    udp
+    [Tags]    udp    edge_case
     Attach UE-1
     Verify attach status attached
     Start udp traffic--5000 kbps on UE-1 bearer-9
@@ -235,7 +235,7 @@ TC30 Start UDP traffic on dedicated bearer
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-1 should be-5000000
 
-TC31 Start UDP traffic on UE out of range should be rejected\
+TC31 Start UDP traffic on UE out of range should be rejected
     [Tags]    udp
     Start udp traffic-5000 kbps on UE-999 bearer-9
     Verify traffic response should be error
@@ -257,7 +257,7 @@ TC33 Start UDP traffic on bearer below range should be rejected
     Verify traffic response should be error
 
 TC34 Start UDP traffic with zero throughput should be error
-    [Tags]    udp
+    [Tags]    udp    edge_case
     Attach UE-1
     Verify attach status attached
     Start udp traffic-0 kbps on UE-1 bearer-9
@@ -305,7 +305,7 @@ TC38 Start UDP traffic on bearer with running TCP should be rejected
     Verify traffic response should be error
     Traffic target for UE-1 bearer-9 should be-5000000
 
-TC38 Start TCP traffic on bearer with running UDP should be rejected
+TC39 Start TCP traffic on bearer with running UDP should be rejected
     [Tags]    mixed
     Attach UE-1
     Verify attach status attached
