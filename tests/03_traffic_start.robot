@@ -118,6 +118,14 @@ TC17 Restart TCP traffic on running bearer should be rejected
     Verify traffic response should be error
     Traffic target for UE-1 bearer-9 should be-5000000
 
+TC18 Multiple UEs traffic independently
+    Attach UE-1
+    Attach UE-2
+    Start tcp traffic-5000 kbps on UE-1 bearer-9
+    Start tcp traffic-10000 kbps on UE-2 bearer-9
+    Traffic target for UE-1 bearer-9 should be-5000000
+    Traffic target for UE-2 bearer-9 should be-10000000
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
