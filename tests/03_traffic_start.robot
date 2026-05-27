@@ -258,6 +258,15 @@ TC37 TCP and UDP traffic on different bearers same UE
     Traffic target for UE-1 bearer-9 should be-5000000
     Traffic target for UE-1 bearer-1 should be-3000000
 
+TC38 Start UDP traffic on bearer with running TCP should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-5000 kbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Start udp traffic-3000 kbps on UE-1 bearer-9
+    Verify traffic response should be error
+    Traffic target for UE-1 bearer-9 should be-5000000
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
