@@ -6,18 +6,32 @@ Resource        ${CURDIR}/../resources/common_keywords.robot
 Test Setup      Reset Simulator
 
 *** Test Cases ***
-TC01 Start tcp traffic on active default bearer
+TC01 Start TCP traffic in kbps on active default bearer
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-9 should be-5000000
 
-TC02 Start tcp traffic on non existing UE should be rejected
+TC02 Start TCP traffic in Mbps on active default bearer
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-10 Mbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Traffic target for UE-1 bearer-9 should be-10000000
+
+TC03 Start TCP traffic in bps on active default bearer
+    Attach UE-1
+    Verify attach status attached
+    Start tcp traffic-5000000 bps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Traffic target for UE-1 bearer-9 should be-5000000
+
+TC04 Start TCP traffic on non existing UE should be rejected
     Start tcp traffic-5000 kbps on UE-999 bearer-9
     Verify traffic response should be error
 
-TC03 Start tcp traffic on non existing bearer should be rejected
+TC05 Start TCP traffic on non existing bearer should be rejected
     Attach UE-1
     Verify attach status attached
     Start tcp traffic-5000 kbps on UE-1 bearer-10
