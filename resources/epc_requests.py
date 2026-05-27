@@ -23,27 +23,31 @@ class epc_requests:
     def reset_simulator(self):
         resp = requests.post(self.base_url.replace('/ues', '/reset'))
         return resp.status_code == 200
-    
-    def get_ues_stats(self):
-        resp = requests.get(f'{self.base_url}/stats')
+
+    def get_ues_stats(self, id=None, include_details=False):
+        params = {'include_details': include_details}
+        if id is not None:
+            params['ue_id'] = id
+
+        resp = requests.get(f'{self.base_url}/stats', params=params)
         return resp.json()
-    
+
     def detach_ue(self, id):
         payload = {'ue_id': id}
         resp = requests.delete(f'{self.base_url}/{id}', json=payload)
         return resp.json()
-    
+
     def add_bearer(self, id, b_id):
         payload = {'bearer_id': b_id}
         resp = requests.post(f'{self.base_url}/{id}/bearers', json=payload)
         return resp.json()
-    
+
     def delete_bearer(self, id, b_id):
         payload = {'ue_id': id, 'bearer_id': b_id}
         resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}', json=payload)
         return resp.json()
 
-    def start_traffic(self, id, b_id, prot, value, unit):
+    def start_traffic(self, id, b_id, prot, Mbps, kbps, bps):
         payload = {
             "protocol": prot,
             "ue_id": id,
@@ -52,6 +56,14 @@ class epc_requests:
         }
 
         resp = requests.post(f'{self.base_url}/{id}/bearers/{b_id}/traffic', json=payload)
+        return resp.json()
+
+    def stop_traffic(self, id, b_id):
+        resp = requests.delete(f'{self.base_url}/{id}/bearers/{b_id}/traffic')
+        return resp.json()
+
+    def get_traffic_stats(self, id, b_id):
+        resp = requests.get(f'{self.base_url}/{id}/bearers/{b_id}/traffic')
         return resp.json()
 
 if __name__ == '__main__':
