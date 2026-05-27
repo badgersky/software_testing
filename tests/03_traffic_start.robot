@@ -246,6 +246,18 @@ TC36 Multiple UEs UDP traffic independently
     Traffic target for UE-1 bearer-9 should be-5000000
     Traffic target for UE-2 bearer-9 should be-10000000
 
+TC37 TCP and UDP traffic on different bearers same UE
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-1 to UE-1
+    Verify bearer status bearer_added
+    Start tcp traffic-5000 kbps on UE-1 bearer-9
+    Verify traffic status traffic_started
+    Start udp traffic-3000 kbps on UE-1 bearer-1
+    Verify traffic status traffic_started
+    Traffic target for UE-1 bearer-9 should be-5000000
+    Traffic target for UE-1 bearer-1 should be-3000000
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
