@@ -13,6 +13,10 @@ TC01 Start traffic on active default bearer
     Verify traffic status traffic_started
     Traffic target for UE-1 bearer-9 should be-5000000
 
+TC02 Start traffic on non existing UE should be rejected
+    Start traffic-5000 kbps on UE-999 bearer-9
+    Verify traffic response should be error
+
 *** Keywords ***
 Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${0}    ${traffic_value}    ${0}
