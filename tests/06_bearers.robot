@@ -34,10 +34,6 @@ TC04 Add already existing bearer should be rejected
     Verify operation response should be error
 
 *** Keywords ***
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Verify attach status ${expected_status}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}

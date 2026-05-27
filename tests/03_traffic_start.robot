@@ -76,6 +76,15 @@ TC11 Start TCP traffic with negative throughput should be rejected
     Start tcp traffic--5000 kbps on UE-1 bearer-9
     Verify traffic response should be error
 
+TC12 Start TCP traffic on dedicated bearer
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-1 to UE-1
+    Verify bearer status bearer_added
+    Start tcp traffic-5000 kbps on UE-1 bearer-1
+    Verify traffic status traffic_started
+    Traffic target for UE-1 bearer-1 should be-5000000
+
 *** Keywords ***
 Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
