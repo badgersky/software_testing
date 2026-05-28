@@ -65,13 +65,6 @@ TC06 Check traffic for inactive bearer should be rejected
     Verify traffic check response should be error
 
 *** Keywords ***
-Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    ${ue_id_as_int}=    Convert To Integer    ${ue_id}
-    ${bearer_id_as_int}=    Convert To Integer    ${bearer_id}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    ue_id    ${ue_id_as_int}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    bearer_id    ${bearer_id_as_int}
-
 Check traffic for UE-${ue_id} bearer-${bearer_id}
     ${response}=    Get Traffic Stats    ${ue_id}    ${bearer_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}

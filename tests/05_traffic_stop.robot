@@ -59,13 +59,6 @@ TC06 Stop traffic for inactive dedicated bearer should be rejected
 
 
 *** Keywords ***
-Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    ${ue_id_as_int}=    Convert To Integer    ${ue_id}
-    ${bearer_id_as_int}=    Convert To Integer    ${bearer_id}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    ue_id    ${ue_id_as_int}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    bearer_id    ${bearer_id_as_int}
-
 Verify traffic status ${expected_status}
     Dictionary Should Contain Key    ${LAST_RESPONSE}    status
     Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}

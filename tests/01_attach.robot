@@ -74,12 +74,6 @@ verify UE-${ue_id} is attached
     Set Test Variable    ${LAST_RESPONSE}    ${response}
     Should Not Be Equal    ${response}    ${None}
 
-verify UE-${ue_id} has bearer-${bearer_id}
-    ${response}=    Get UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-    ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
-    Dictionary Should Contain Key    ${bearers}    ${bearer_id}
-
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
 
@@ -96,10 +90,6 @@ UE-${ue_id} should have exactly one bearer
     Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
     ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
     Length Should Be    ${bearers}    1
-
-verify attach status ${expected_status}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
 
 verify attach response is above of range
     ${detail_list}=    Get From Dictionary    ${LAST_RESPONSE}    detail
