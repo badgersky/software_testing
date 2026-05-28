@@ -75,6 +75,8 @@ verify UE-${ue_id} is attached
     Should Not Be Equal    ${response}    ${None}
 
 verify UE-${ue_id} has bearer-${bearer_id}
+    ${response}=    Get UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
     ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
     Dictionary Should Contain Key    ${bearers}    ${bearer_id}
 
