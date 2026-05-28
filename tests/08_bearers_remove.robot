@@ -40,6 +40,45 @@ TC05 Delete bearer for non-existent UE should be rejected
     Delete bearer-1 from UE-999
     Verify operation response should be error
 
+TC06 Delete same bearer twice should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+    Delete bearer-1 from UE-1
+    Verify operation status bearer_deleted
+    verify UE-1 does not have bearer-1
+    Delete bearer-1 from UE-1
+    Verify operation response should be error
+
+TC07 Delete bearer from detached UE should be rejected
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+
+    Detach UE-1
+    Verify operation status detached
+
+    Delete bearer-1 from UE-1
+    Verify operation response should be error
+
+TC08 Delete one bearer should not affect other bearers
+    Attach UE-1
+    Verify attach status attached
+
+    Add bearer-1 to UE-1
+    Verify operation status bearer_added
+
+    Add bearer-2 to UE-1
+    Verify operation status bearer_added
+
+    Delete bearer-1 from UE-1
+    Verify operation status bearer_deleted
+
+    verify UE-1 does not have bearer-1
+    verify UE-1 has bearer-2
 
 *** Keywords ***
 verify UE-${ue_id} does not have bearer-${bearer_id}

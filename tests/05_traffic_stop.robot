@@ -10,7 +10,7 @@ Test Setup       Reset Simulator
 TC01 Stop traffic for default bearer
     Attach UE-1
     Verify attach status attached
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
     Stop traffic on UE-1 bearer-9
     Verify stop traffic response contains UE-1 bearer-9
@@ -21,7 +21,7 @@ TC02 Stop traffic for dedicated bearer
     Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
-    Start traffic-2500 kbps on UE-1 bearer-5
+    Start udp traffic-2500 kbps on UE-1 bearer-5
     Verify traffic status traffic_started
     Stop traffic on UE-1 bearer-5
     Verify stop traffic response contains UE-1 bearer-5
@@ -32,9 +32,9 @@ TC03 Stop all traffic for UE
     Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
-    Start traffic-5000 kbps on UE-1 bearer-9
+    Start udp traffic-5000 kbps on UE-1 bearer-9
     Verify traffic status traffic_started
-    Start traffic-2500 kbps on UE-1 bearer-5
+    Start udp traffic-2500 kbps on UE-1 bearer-5
     Verify traffic status traffic_started
     Stop all traffic for UE-1
     Verify all traffic for UE-1 is stopped
@@ -65,10 +65,6 @@ Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
     ${bearer_id_as_int}=    Convert To Integer    ${bearer_id}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    ue_id    ${ue_id_as_int}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    bearer_id    ${bearer_id_as_int}
-
-Start traffic-${traffic_value} kbps on UE-${ue_id} bearer-${bearer_id}
-    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${None}    ${traffic_value}    ${None}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
 
 Verify traffic status ${expected_status}
     Dictionary Should Contain Key    ${LAST_RESPONSE}    status

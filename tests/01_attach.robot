@@ -63,6 +63,11 @@ TC09 Newly attached UE has exactly one bearer
     Verify attach status attached
     UE-5 should have exactly one bearer
 
+TC10 Newly attached UE has default bearer
+    Attach UE-1
+    Verify attach status attached
+    verify UE-1 has bearer-9
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
@@ -70,6 +75,8 @@ verify UE-${ue_id} is attached
     Should Not Be Equal    ${response}    ${None}
 
 verify UE-${ue_id} has bearer-${bearer_id}
+    ${response}=    Get UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
     ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
     Dictionary Should Contain Key    ${bearers}    ${bearer_id}
 

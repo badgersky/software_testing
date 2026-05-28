@@ -316,10 +316,6 @@ TC39 Start TCP traffic on bearer with running UDP should be rejected
     Traffic target for UE-1 bearer-9 should be-5000000
 
 *** Keywords ***
-Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
-    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Traffic target for UE-${ue_id} bearer-${bearer_id} should be-${expected_target}
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}

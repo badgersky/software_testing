@@ -28,6 +28,10 @@ UEs list should be empty
     ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
     Length Should Be    ${ues}    0
 
+Start ${protocol} traffic-${traffic_value} ${unit} on UE-${ue_id} bearer-${bearer_id}
+    ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    ${protocol}    ${traffic_value}    ${unit}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+
 Detach UE-${ue_id}
     ${response}=    Detach UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
