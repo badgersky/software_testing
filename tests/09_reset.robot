@@ -28,9 +28,3 @@ TC02 Reset simulator clears stats
     Should Be Equal As Integers    ${bearer_count}    0
     ${total_tx_bps}=    Get From Dictionary    ${stats}    total_tx_bps
     Should Be Equal As Integers    ${total_tx_bps}    0
-
-*** Keywords ***
-UEs list should be empty
-    ${response}=    Get UEs
-    ${ues}=    Get From Dictionary    ${response}    ues
-    Length Should Be    ${ues}    0

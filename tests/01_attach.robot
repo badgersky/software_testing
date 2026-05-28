@@ -83,12 +83,6 @@ verify UE-${ue_id} has bearer-${bearer_id}
 verify attach response is duplicate
     Dictionary Should Contain Item    ${LAST_RESPONSE}    detail    UE already attached
 
-UEs list should be empty
-    ${response}=    Get UEs
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-    ${ues}=    Get From Dictionary    ${LAST_RESPONSE}    ues
-    Length Should Be    ${ues}    0
-
 UEs list should contain UE-${ue_id}
     ${response}=    Get UEs
     Set Test Variable    ${LAST_RESPONSE}    ${response}

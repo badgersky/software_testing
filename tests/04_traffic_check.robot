@@ -65,10 +65,6 @@ TC06 Check traffic for inactive bearer should be rejected
     Verify traffic check response should be error
 
 *** Keywords ***
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     ${ue_id_as_int}=    Convert To Integer    ${ue_id}

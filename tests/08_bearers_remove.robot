@@ -81,10 +81,6 @@ TC08 Delete one bearer should not affect other bearers
     verify UE-1 has bearer-2
 
 *** Keywords ***
-Delete bearer-${bearer_id} from UE-${ue_id}
-    ${response}=    Delete Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 verify UE-${ue_id} does not have bearer-${bearer_id}
     ${response}=    Get UE    ${ue_id}
     ${bearers}=    Get From Dictionary    ${response}    bearers
@@ -94,11 +90,3 @@ verify UE-${ue_id} has bearer-${bearer_id}
     ${response}=    Get UE    ${ue_id}
     ${bearers}=    Get From Dictionary    ${response}    bearers
     Dictionary Should Contain Key    ${bearers}    ${bearer_id}
-
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-    
-Detach UE-${ue_id}
-    ${response}=    Detach UE    ${ue_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
