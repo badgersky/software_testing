@@ -30,11 +30,6 @@ TC02 Reset simulator clears stats
     Should Be Equal As Integers    ${total_tx_bps}    0
 
 *** Keywords ***
-UEs list should be empty
-    ${response}=    Get UEs
-    ${ues}=    Get From Dictionary    ${response}    ues
-    Length Should Be    ${ues}    0
-
 Start traffic-${traffic_value} Mbps on UE-${ue_id} bearer-${bearer_id}
     ${response}=    Start Traffic    ${ue_id}    ${bearer_id}    udp    ${traffic_value}    ${0}    ${0}
     Set Test Variable    ${LAST_RESPONSE}    ${response}

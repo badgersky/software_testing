@@ -79,10 +79,6 @@ TC08 Add remove and re-add bearer successfully
     verify UE-1 has bearer-1
 
 *** Keywords ***
-Verify attach status ${expected_status}
-    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
-    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    ${expected_status}
-
 verify UE-${ue_id} has bearer-${bearer_id}
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
@@ -99,7 +95,3 @@ Verify operation response should be error
     ELSE
         Fail    Expected an error response payload containing 'detail', but got: ${LAST_RESPONSE}
     END
-
-Delete bearer-${bearer_id} from UE-${ue_id}
-    ${response}=    Delete Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}

@@ -4,11 +4,6 @@ Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i
 Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
 Resource         ${CURDIR}/../resources/common_keywords.robot
 Test Setup       Reset Simulator
-Library          Collections
-Variables        ${CURDIR}/../resources/config.py    # STWORZYC PLIK config.py i utworzyć w nim zmienna BASE_URL: BASE_URL = 'https://...'
-Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
-Resource         ${CURDIR}/../resources/common_keywords.robot
-Test Setup       Reset Simulator
 
 *** Test Cases ***
 TC01 Check current traffic for default bearer
@@ -70,10 +65,6 @@ TC06 Check traffic for inactive bearer should be rejected
     Verify traffic check response should be error
 
 *** Keywords ***
-Add bearer-${bearer_id} to UE-${ue_id}
-    ${response}=    Add Bearer    ${ue_id}    ${bearer_id}
-    Set Test Variable    ${LAST_RESPONSE}    ${response}
-
 Verify add bearer response contains UE-${ue_id} bearer-${bearer_id}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     ${ue_id_as_int}=    Convert To Integer    ${ue_id}
