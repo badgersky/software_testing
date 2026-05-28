@@ -42,6 +42,10 @@ TC06 Detach UE with active traffic
     Verify detach status detached
     UE-1 should not exist
 
+TC07 Detach UE min id when not attached should be rejected
+    Detach UE-0
+    Verify detach response should be error
+
 *** Keywords ***
 UE-${ue_id} should not exist
     ${response}=    Get UE    ${ue_id}

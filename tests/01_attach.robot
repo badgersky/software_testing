@@ -63,6 +63,11 @@ TC09 Newly attached UE has exactly one bearer
     Verify attach status attached
     UE-5 should have exactly one bearer
 
+TC10 Newly attached UE has default bearer
+    Attach UE-1
+    Verify attach status attached
+    verify UE-1 has bearer-9
+
 *** Keywords ***
 verify UE-${ue_id} is attached
     ${response}=    Get UE    ${ue_id}
