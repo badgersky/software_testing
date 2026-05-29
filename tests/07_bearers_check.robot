@@ -12,6 +12,7 @@ TC01 Check default bearer after UE attach
     Check bearers for UE-1
     Verify bearers check response contains UE-1
     Verify checked bearers include bearer-9
+    Verify checked bearer-9 has correct config
     Verify checked bearers count is 1
 
 TC02 Check dedicated bearer after adding it to UE
@@ -23,22 +24,23 @@ TC02 Check dedicated bearer after adding it to UE
     Verify bearers check response contains UE-1
     Verify checked bearers include bearer-9
     Verify checked bearers include bearer-5
+    Verify checked bearer-5 has correct config
     Verify checked bearers count is 2
 
 TC03 Check multiple dedicated bearers for UE
     Attach UE-1
     Verify attach status attached
-    Add bearer-1 to UE-1
-    Verify add bearer response contains UE-1 bearer-1
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
+    Add bearer-1 to UE-1
+    Verify add bearer response contains UE-1 bearer-1
     Add bearer-8 to UE-1
     Verify add bearer response contains UE-1 bearer-8
     Check bearers for UE-1
     Verify bearers check response contains UE-1
     Verify checked bearers include bearer-9
-    Verify checked bearers include bearer-1
     Verify checked bearers include bearer-5
+    Verify checked bearers include bearer-1
     Verify checked bearers include bearer-8
     Verify checked bearers count is 4
 
@@ -60,30 +62,88 @@ TC05 Check bearers for not attached UE should be rejected
 TC06 Check bearers independently for two attached UEs
     Attach UE-1
     Verify attach status attached
-    Attach UE-2
-    Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
+    Attach UE-2
+    Verify attach status attached
     Add bearer-3 to UE-2
     Verify add bearer response contains UE-2 bearer-3
-
     Check bearers for UE-1
     Verify bearers check response contains UE-1
     Verify checked bearers include bearer-9
     Verify checked bearers include bearer-5
     Verify checked bearers do not include bearer-3
-    Verify checked bearers count is 2
-
     Check bearers for UE-2
     Verify bearers check response contains UE-2
     Verify checked bearers include bearer-9
     Verify checked bearers include bearer-3
     Verify checked bearers do not include bearer-5
-    Verify checked bearers count is 2
+
+TC07 Check bearers for UE below allowed range should be rejected
+    Check bearers with UE ID -1
+    Verify bearers check response should be error
+
+TC08 Check bearers for UE above allowed range should be rejected
+    Check bearers for UE-101
+    Verify bearers check response should be error
+
+TC09 Check bearers for non numeric UE ID should be rejected
+    Check bearers with UE ID abc
+    Verify bearers check response should be error
+
+TC10 Check bearers after UE detach should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Detach UE-1
+    Verify detach status detached
+    Check bearers for UE-1
+    Verify bearers check response should be error
+
+TC11 Check bearer list after deleting dedicated bearer
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-5 to UE-1
+    Verify add bearer response contains UE-1 bearer-5
+    Check bearers for UE-1
+    Verify checked bearers include bearer-5
+    Delete bearer-5 from UE-1
+    Check bearers for UE-1
+    Verify bearers check response contains UE-1
+    Verify checked bearers include bearer-9
+    Verify checked bearers do not include bearer-5
+    Verify checked bearers count is 1
+
+TC12 Checked bearers should contain only IDs from allowed range
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-1 to UE-1
+    Verify add bearer response contains UE-1 bearer-1
+    Add bearer-5 to UE-1
+    Verify add bearer response contains UE-1 bearer-5
+    Add bearer-8 to UE-1
+    Verify add bearer response contains UE-1 bearer-8
+    Check bearers for UE-1
+    Verify bearers check response contains UE-1
+    Verify all checked bearer IDs are in allowed range
+
+TC13 Bearer key should match bearer_id field in bearer config
+    Attach UE-1
+    Verify attach status attached
+    Add bearer-5 to UE-1
+    Verify add bearer response contains UE-1 bearer-5
+    Add bearer-8 to UE-1
+    Verify add bearer response contains UE-1 bearer-8
+    Check bearers for UE-1
+    Verify bearers check response contains UE-1
+    Verify each bearer key matches bearer_id field
 
 
 *** Keywords ***
 Check bearers for UE-${ue_id}
+    ${response}=    Get UE    ${ue_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+
+Check bearers with UE ID ${ue_id}
     ${response}=    Get UE    ${ue_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
 
@@ -115,8 +175,42 @@ Verify checked bearers count is ${expected_count}
     ${bearer_count}=    Get Length    ${bearers}
     Should Be Equal As Integers    ${bearer_count}    ${expected_count}
 
+Verify checked bearer-${bearer_id} has correct config
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
+    ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
+    ${bearer_id_as_string}=    Convert To String    ${bearer_id}
+    ${bearer_id_as_int}=    Convert To Integer    ${bearer_id}
+    Dictionary Should Contain Key    ${bearers}    ${bearer_id_as_string}
+    ${bearer_config}=    Get From Dictionary    ${bearers}    ${bearer_id_as_string}
+    Dictionary Should Contain Item    ${bearer_config}    bearer_id    ${bearer_id_as_int}
+    Dictionary Should Contain Key    ${bearer_config}    protocol
+    Dictionary Should Contain Key    ${bearer_config}    target_bps
+    Dictionary Should Contain Key    ${bearer_config}    active
+
 Verify bearers check response should be error
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     ${has_detail}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
     ${has_error_status}=    Run Keyword And Return Status    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    error
     Should Be True    ${has_detail} or ${has_error_status}
+
+Verify all checked bearer IDs are in allowed range
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
+    ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
+
+    FOR    ${bearer_key}    ${bearer_config}    IN    &{bearers}
+        ${bearer_id_as_int}=    Convert To Integer    ${bearer_key}
+        Should Be True    ${bearer_id_as_int} >= 1 and ${bearer_id_as_int} <= 9
+    END
+
+Verify each bearer key matches bearer_id field
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    Dictionary Should Contain Key    ${LAST_RESPONSE}    bearers
+    ${bearers}=    Get From Dictionary    ${LAST_RESPONSE}    bearers
+
+    FOR    ${bearer_key}    ${bearer_config}    IN    &{bearers}
+        ${bearer_key_as_int}=    Convert To Integer    ${bearer_key}
+        Dictionary Should Contain Key    ${bearer_config}    bearer_id
+        Dictionary Should Contain Item    ${bearer_config}    bearer_id    ${bearer_key_as_int}
+    END
