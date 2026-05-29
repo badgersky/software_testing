@@ -39,23 +39,25 @@ TC03 Stop all traffic for UE
     Stop all traffic for UE-1
     Verify all traffic for UE-1 is stopped
 
-TC04 Stop traffic for inactive default bearer should be rejected
+TC04 Stop traffic for inactive default bearer
     Attach UE-1
     Verify attach status attached
     Stop traffic on UE-1 bearer-9
-    Verify stop traffic response should be error
+    Verify stop traffic response contains UE-1 bearer-9
+    Verify UE-1 bearer-9 traffic is stopped
 
 TC05 Stop traffic for not attached UE should be rejected
     Stop traffic on UE-99 bearer-9
     Verify stop traffic response should be error
 
-TC06 Stop traffic for inactive dedicated bearer should be rejected
+TC06 Stop traffic for inactive dedicated bearer
     Attach UE-1
     Verify attach status attached
     Add bearer-5 to UE-1
     Verify add bearer response contains UE-1 bearer-5
     Stop traffic on UE-1 bearer-5
-    Verify stop traffic response should be error
+    Verify stop traffic response contains UE-1 bearer-5
+    Verify UE-1 bearer-5 traffic is stopped
 
 
 *** Keywords ***
