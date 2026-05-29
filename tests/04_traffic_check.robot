@@ -5,6 +5,7 @@ Library          ${CURDIR}/../resources/epc_requests.py    ${BASE_URL}
 Resource         ${CURDIR}/../resources/common_keywords.robot
 Test Setup       Reset Simulator
 
+
 *** Test Cases ***
 TC01 Check current traffic for default bearer
     Attach UE-1
@@ -58,14 +59,69 @@ TC05 Check summary traffic without bearer ID
     Verify traffic summary should show UE count-1
     Verify traffic summary should show bearer count-1
 
-TC06 Check traffic for inactive bearer should be rejected
+TC06 Check traffic for not added bearer should be rejected
     Attach UE-1
     Verify attach status attached
     Check traffic for UE-1 bearer-5
     Verify traffic check response should be error
 
+TC07 Check traffic for not attached UE should be rejected
+    Check traffic for UE-50 bearer-9
+    Verify traffic check response should be error
+
+TC08 Check traffic for UE below allowed range should be rejected
+    Check traffic with UE ID -1 and bearer ID 9
+    Verify traffic check response should be error
+
+TC09 Check traffic for UE above allowed range should be rejected
+    Check traffic for UE-101 bearer-9
+    Verify traffic check response should be error
+
+TC10 Check traffic for non numeric UE ID should be rejected
+    Check traffic with UE ID abc and bearer ID 9
+    Verify traffic check response should be error
+
+TC11 Check traffic for bearer below allowed range should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Check traffic for UE-1 bearer-0
+    Verify traffic check response should be error
+
+TC12 Check traffic for bearer above allowed range should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Check traffic for UE-1 bearer-10
+    Verify traffic check response should be error
+
+TC13 Check traffic for non numeric bearer ID should be rejected
+    Attach UE-1
+    Verify attach status attached
+    Check traffic with UE ID 1 and bearer ID abc
+    Verify traffic check response should be error
+
+TC14 Check summary traffic for not attached UE should be rejected
+    Check summary traffic for UE-50
+    Verify traffic summary response should be error
+
+TC15 Check summary traffic for UE below allowed range should be rejected
+    Check summary traffic with UE ID -1
+    Verify traffic summary response should be error
+
+TC16 Check summary traffic for UE above allowed range should be rejected
+    Check summary traffic for UE-101
+    Verify traffic summary response should be error
+
+TC17 Check summary traffic for non numeric UE ID should be rejected
+    Check summary traffic with UE ID abc
+    Verify traffic summary response should be error
+
+
 *** Keywords ***
 Check traffic for UE-${ue_id} bearer-${bearer_id}
+    ${response}=    Get Traffic Stats    ${ue_id}    ${bearer_id}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+
+Check traffic with UE ID ${ue_id} and bearer ID ${bearer_id}
     ${response}=    Get Traffic Stats    ${ue_id}    ${bearer_id}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
 
@@ -96,6 +152,10 @@ Check summary traffic for UE-${ue_id}
     ${response}=    Get Ues Stats    ${ue_id}    ${True}
     Set Test Variable    ${LAST_RESPONSE}    ${response}
 
+Check summary traffic with UE ID ${ue_id}
+    ${response}=    Get Ues Stats    ${ue_id}    ${True}
+    Set Test Variable    ${LAST_RESPONSE}    ${response}
+
 Verify traffic summary should contain transfer fields
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     Dictionary Should Contain Key    ${LAST_RESPONSE}    scope
@@ -114,3 +174,15 @@ Verify traffic summary should show bearer count-${expected_count}
     Should Not Be Equal    ${LAST_RESPONSE}    ${None}
     ${expected_count_as_int}=    Convert To Integer    ${expected_count}
     Dictionary Should Contain Item    ${LAST_RESPONSE}    bearer_count    ${expected_count_as_int}
+
+Verify traffic check response should be error
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    ${has_detail}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
+    ${has_error_status}=    Run Keyword And Return Status    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    error
+    Should Be True    ${has_detail} or ${has_error_status}
+
+Verify traffic summary response should be error
+    Should Not Be Equal    ${LAST_RESPONSE}    ${None}
+    ${has_detail}=    Run Keyword And Return Status    Dictionary Should Contain Key    ${LAST_RESPONSE}    detail
+    ${has_error_status}=    Run Keyword And Return Status    Dictionary Should Contain Item    ${LAST_RESPONSE}    status    error
+    Should Be True    ${has_detail} or ${has_error_status}
